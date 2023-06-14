@@ -1,0 +1,41 @@
+{
+	"schemaVersion": 1,
+	"id": "haydaylite",
+	"version": "${0.1}",
+	"name": "HayDayLte",
+	"description": "Expands farming",
+	"authors": [
+		"Runix"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "MIT-License",
+	"icon": "assets/haydaylite/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"net.runix.Haydaylite"
+		],
+		"client": [
+			"net.runix.HaydayliteClient"
+		]
+	},
+	"mixins": [
+		"haydaylite.mixins.json",
+		{
+			"config": "haydaylite.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.14.21",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
