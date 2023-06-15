@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/crop",
+  "textures": {
+    "crop" : "haydaylite:block/broccoli_crop_block_stage0"
+  }
+
+}

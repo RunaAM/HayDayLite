@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:block/crop",
   "textures": {
-    "crop": "haydaylite:block/custom_crop_block_stage2"
+    "crop": "minecraft:block/corn_crop_block_stage4"
+
   }
 }

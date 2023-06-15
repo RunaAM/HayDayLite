@@ -2,7 +2,7 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "rolls": 3.0,
+      "rolls": 2.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
@@ -13,17 +13,17 @@
               "conditions": [
                 {
                   "condition": "minecraft:block_state_property",
-                  "block": "haydaylite:custom_crop_block",
+                  "block": "haydaylite:corn_crop_block",
                   "properties": {
-                    "age": "6"
+                    "age": "7"
                   }
                 }
               ],
-              "name": "haydaylite:broccoli"
+              "name": "haydaylite:corn"
             },
             {
               "type": "minecraft:item",
-              "name": "haydaylite:broccoli"
+              "name": "haydaylite:corn"
             }
           ]
         }

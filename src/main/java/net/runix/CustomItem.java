@@ -15,6 +15,5 @@ public class CustomItem extends Item {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity playerEntity, Hand hand){
         playerEntity.playSound(SoundEvents.BLOCK_WOOL_BREAK,1.0f,1.0f);
-        return TypedActionResult.success(playerEntity.getStackInHand((hand)));
-    }
+        return TypedActionResult.success(playerEntity.getStackInHand((hand)));    }
 }
