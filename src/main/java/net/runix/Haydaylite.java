@@ -32,6 +32,16 @@ public class Haydaylite implements ModInitializer {
             .displayName(Text.translatable("itemGroup.haydaylite.test_group"))
             .build();
 
+    private static void RegisterCrop(Item crop,String path,int fuelValue, float compostingValue){
+        FuelRegistry.INSTANCE.add(crop,fuelValue);
+        CompostingChanceRegistry.INSTANCE.add(crop, compostingValue);
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(content ->{
+            content.add(crop);
+        });
+        Registry.register(Registries.ITEM, new Identifier(MOD_ID,path), crop);
+
+
+    }
     @Override
     public void onInitialize() {
         // This code runs as soon as Minecraft is in a mod-load-ready state.
@@ -44,10 +54,15 @@ public class Haydaylite implements ModInitializer {
 
         Registry.register(Registries.ITEM_GROUP, new Identifier(MOD_ID,"test_group"),ITEM_GROUP);
 
-        ItemGroupEvents.modifyEntriesEvent(ITEM_GROUP).register(content ->{
-            content.add( CUSTOM_ITEM);
-        });
+
         Registry.register(Registries.ITEM,new Identifier(MOD_ID,"custom_item"),CUSTOM_ITEM);
+
+        //RegisterCrop(CustomCrops.BroccoliItem,"broccoli",20,3.f);
+        RegisterCrop(CustomCrops.CornItem,"corn",100,0.2f);
+        Registry.register(Registries.BLOCK, new Identifier(MOD_ID,"custom_crop_block"), CustomCrops.CustomCropBlock);
+        RegisterCrop(CustomCrops.BroccoliItem,"broccoli",20,0.3f);
+
+
 
     }
 }
