@@ -72,6 +72,6 @@ public class Haydaylite implements ModInitializer {
         Registry.register(Registries.BLOCK, new Identifier(MOD_ID,"broccoli_crop_block"),CustomCrops.BroccoliCropBlock);
 
 
-
+        //TODO: fix loot tables for crop blocks
     }
 }
