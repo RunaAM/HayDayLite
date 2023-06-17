@@ -13,17 +13,17 @@
               "conditions": [
                 {
                   "condition": "minecraft:block_state_property",
-                  "block": "haydaylite:corn_crop_block",
+                  "block": "haydaylite:cabbage_crop_block",
                   "properties": {
                     "age": "7"
                   }
                 }
               ],
-              "name": "haydaylite:corn"
+              "name": "haydaylite:cabbage"
             },
             {
               "type": "minecraft:item",
-              "name": "haydaylite:corn"
+              "name": "haydaylite:cabbage"
             }
           ]
         }
@@ -46,13 +46,13 @@
               }
             }
           ],
-          "name": "haydaylite:corn"
+          "name": "haydaylite:cabbage"
         }
       ],
       "conditions": [
         {
           "condition": "minecraft:block_state_property",
-          "block": "haydaylite:corn_crop_block",
+          "block": "haydaylite:cabbage_crop_block",
           "properties": {
             "age": "7"
           }

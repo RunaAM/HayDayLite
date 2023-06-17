@@ -2,25 +2,16 @@ package net.runix;
 
 import net.fabricmc.api.ModInitializer;
 
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
-import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
-import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
 import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
-import net.minecraft.block.Blocks;
 import net.minecraft.item.*;
-import net.minecraft.loot.LootPool;
-import net.minecraft.loot.condition.RandomChanceLootCondition;
-import net.minecraft.loot.entry.ItemEntry;
-import net.minecraft.loot.function.SetCountLootFunction;
-import net.minecraft.loot.provider.number.UniformLootNumberProvider;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.runix.blocks.CustomCropBlocks;
+import net.runix.items.CustomCrops;
+import net.runix.loot_tables.CustomLootTables;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,8 +20,7 @@ import org.slf4j.LoggerFactory;
 public class Haydaylite implements ModInitializer {
     public static final String MOD_ID = "haydaylite";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
-    public static final Identifier GRASS_LOOT_TABLE = Blocks.GRASS.getLootTableId();
-    public static final Identifier WHEAT_LOOT_TABLE = Blocks.WHEAT.getLootTableId();
+
 
     private static void RegisterCrop(Item crop,String path,int fuelValue, float compostingValue){
         FuelRegistry.INSTANCE.add(crop,fuelValue);
@@ -45,33 +35,22 @@ public class Haydaylite implements ModInitializer {
     }
     @Override
     public void onInitialize() {
-
-        LootTableEvents.MODIFY.register((resourceManager, lootManager, id, tableBuilder, source) -> {
-            if(source.isBuiltin()&& GRASS_LOOT_TABLE.equals(id)){
-                LootPool.Builder poolBuilder = LootPool.builder()
-                        .with(ItemEntry.builder(CustomCrops.BroccoliItem))
-                        .conditionally(RandomChanceLootCondition.builder(0.15f))
-                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f,2.0f)).build());
-                tableBuilder.pool(poolBuilder);
-            }
-        });
-        LootTableEvents.MODIFY.register((resourceManager, lootManager, id, tableBuilder, source) -> {
-            if(source.isBuiltin()&&WHEAT_LOOT_TABLE.equals(id)){
-                LootPool.Builder poolBuider = LootPool.builder()
-                        .with(ItemEntry.builder(CustomCrops.CornItem))
-                        .conditionally(RandomChanceLootCondition.builder(0.05f))
-                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f,2.0f)));
-                tableBuilder.pool(poolBuider);
-            }
-        });
+        CustomLootTables.ModifyLootTable(CustomLootTables.GRASS_LOOT_TABLE, CustomCrops.BroccoliItem,0.15f);
+        CustomLootTables.ModifyLootTable(CustomLootTables.WHEAT_LOOT_TABLE, CustomCrops.CornItem,0.05f);
+        CustomLootTables.ModifyLootTable(CustomLootTables.CARROTS_LOOT_TABLE, CustomCrops.TomatoItem,0.15f);
 
 
         RegisterCrop(CustomCrops.CornItem,"corn",100,0.2f);
-        Registry.register(Registries.BLOCK, new Identifier(MOD_ID,"corn_crop_block"), CustomCrops.CornCropBlock);
+        Registry.register(Registries.BLOCK, new Identifier(MOD_ID,"corn_crop_block"), CustomCropBlocks.CornCropBlock);
         RegisterCrop(CustomCrops.BroccoliItem,"broccoli",20,0.3f);
-        Registry.register(Registries.BLOCK, new Identifier(MOD_ID,"broccoli_crop_block"),CustomCrops.BroccoliCropBlock);
+        Registry.register(Registries.BLOCK, new Identifier(MOD_ID,"broccoli_crop_block"), CustomCropBlocks.BroccoliCropBlock);
+        RegisterCrop(CustomCrops.TomatoItem,"tomato",10,0.3f);
+        Registry.register(Registries.BLOCK,new Identifier(MOD_ID,"tomato_crop_block"), CustomCropBlocks.TomatoCropBlock);
+        RegisterCrop(CustomCrops.OnionItem,"onion",200,0.3f);
+        Registry.register(Registries.BLOCK,new Identifier(MOD_ID,"onion_crop_block"),CustomCropBlocks.OnionCropBlock);
+        RegisterCrop(CustomCrops.CabbageItem,"cabbage",150,0.4f);
+        Registry.register(Registries.BLOCK,new Identifier(MOD_ID,"cabbage_crop_block"),CustomCropBlocks.CabbageCropBlock);
 
 
-        //TODO: fix loot tables for crop blocks
     }
 }

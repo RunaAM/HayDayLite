@@ -13,17 +13,17 @@
               "conditions": [
                 {
                   "condition": "minecraft:block_state_property",
-                  "block": "haydaylite:corn_crop_block",
+                  "block": "haydaylite:onion_crop_block",
                   "properties": {
                     "age": "7"
                   }
                 }
               ],
-              "name": "haydaylite:corn"
+              "name": "haydaylite:onion"
             },
             {
               "type": "minecraft:item",
-              "name": "haydaylite:corn"
+              "name": "haydaylite:onion"
             }
           ]
         }
@@ -46,13 +46,13 @@
               }
             }
           ],
-          "name": "haydaylite:corn"
+          "name": "haydaylite:onion"
         }
       ],
       "conditions": [
         {
           "condition": "minecraft:block_state_property",
-          "block": "haydaylite:corn_crop_block",
+          "block": "haydaylite:onion_crop_block",
           "properties": {
             "age": "7"
           }
