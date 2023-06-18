@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "TOT",
+    "CBC",
+    " W "
+  ],
+  "key": {
+    "O": {
+      "item": "haydaylite:onion"
+    },
+    "T": {
+      "item": "haydaylite:tomato"
+    },
+    "B": {
+      "item": "haydaylite:broccoli"
+    },
+    "C": {
+      "item": "minecraft:carrot"
+    },
+    "W": {
+      "item": "minecraft:bowl"
+    }
+  },
+  "result": {
+    "item": "haydaylite:mixed_salad",
+    "count": 1
+  }
+
+}

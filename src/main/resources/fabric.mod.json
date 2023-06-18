@@ -15,6 +15,9 @@
 	"icon": "assets/haydaylite/icon.png",
 	"environment": "*",
 	"entrypoints": {
+		"fabric-datagen": [
+			"net.runix.experimental.DataGeneration"
+		],
 		"main": [
 			"net.runix.Haydaylite"
 		],

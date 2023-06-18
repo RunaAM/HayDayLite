@@ -2,6 +2,7 @@ package net.runix;
 
 import net.fabricmc.api.ModInitializer;
 
+import net.fabricmc.fabric.api.entity.event.v1.EntityElytraEvents;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
@@ -11,6 +12,7 @@ import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import net.runix.blocks.CustomCropBlocks;
 import net.runix.items.CustomCrops;
+import net.runix.items.CustomFood;
 import net.runix.loot_tables.CustomLootTables;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,6 +37,7 @@ public class Haydaylite implements ModInitializer {
     }
     @Override
     public void onInitialize() {
+        System.out.println(FoodComponents.GOLDEN_CARROT.getSaturationModifier());
         CustomLootTables.ModifyLootTable(CustomLootTables.GRASS_LOOT_TABLE, CustomCrops.BroccoliItem,0.15f);
         CustomLootTables.ModifyLootTable(CustomLootTables.WHEAT_LOOT_TABLE, CustomCrops.CornItem,0.05f);
         CustomLootTables.ModifyLootTable(CustomLootTables.CARROTS_LOOT_TABLE, CustomCrops.TomatoItem,0.15f);
@@ -50,6 +53,21 @@ public class Haydaylite implements ModInitializer {
         Registry.register(Registries.BLOCK,new Identifier(MOD_ID,"onion_crop_block"),CustomCropBlocks.OnionCropBlock);
         RegisterCrop(CustomCrops.CabbageItem,"cabbage",150,0.4f);
         Registry.register(Registries.BLOCK,new Identifier(MOD_ID,"cabbage_crop_block"),CustomCropBlocks.CabbageCropBlock);
+
+        Registry.register(Registries.ITEM,new Identifier(MOD_ID,"mixed_salad"),CustomFood.MixedSalad);
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(content ->{
+            content.add(CustomFood.MixedSalad);
+        });
+
+        Registry.register(Registries.ITEM,new Identifier(MOD_ID,"sandwich"), CustomFood.Sandwich);
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(content ->{
+            content.add(CustomFood.Sandwich);
+        });
+
+        Registry.register(Registries.ITEM,new Identifier(MOD_ID,"tomato_sauce"),CustomFood.TomatoSauce);
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(content->{
+            content.add(CustomFood.TomatoSauce);
+        });
 
 
     }
