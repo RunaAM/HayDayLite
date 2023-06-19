@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "haydaylite:tomato"
+    },
+    {
+      "item": "haydaylite:tomato"
+    },
+    {
+      "item": "haydaylite:broccoli"
+    },
+    {
+      "item": "haydaylite:cabbage"
+    },
+    {
+      "item": "haydaylite:onion"
+    },
+    {
+      "item": "minecraft:bowl"
+    }
+  ],
+  "result": {
+    "item": "haydaylite:mixed_salad"
+  }
+}

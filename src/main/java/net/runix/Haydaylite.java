@@ -7,6 +7,7 @@ import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.minecraft.item.*;
+import net.minecraft.loot.LootTables;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
@@ -43,6 +44,16 @@ public class Haydaylite implements ModInitializer {
         CustomLootTables.ModifyLootTable(CustomLootTables.CARROTS_LOOT_TABLE, CustomCrops.TomatoItem,0.15f);
 
 
+        for(Identifier LootTable : CustomLootTables.VILLAGE_LOOT_TABLES){
+            CustomLootTables.ModifyLootTable(LootTable, CustomCrops.CornItem,0.05f);
+            CustomLootTables.ModifyLootTable(LootTable, CustomCrops.OnionItem,0.05f);
+            CustomLootTables.ModifyLootTable(LootTable, CustomCrops.CabbageItem,0.05f);
+            CustomLootTables.ModifyLootTable(LootTable, CustomCrops.TomatoItem,0.05f);
+            CustomLootTables.ModifyLootTable(LootTable, CustomCrops.BroccoliItem,0.05f);
+
+        }
+
+
         RegisterCrop(CustomCrops.CornItem,"corn",100,0.2f);
         Registry.register(Registries.BLOCK, new Identifier(MOD_ID,"corn_crop_block"), CustomCropBlocks.CornCropBlock);
         RegisterCrop(CustomCrops.BroccoliItem,"broccoli",20,0.3f);
@@ -67,6 +78,21 @@ public class Haydaylite implements ModInitializer {
         Registry.register(Registries.ITEM,new Identifier(MOD_ID,"tomato_sauce"),CustomFood.TomatoSauce);
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(content->{
             content.add(CustomFood.TomatoSauce);
+        });
+
+        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "polenta"), CustomFood.Polenta);
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(content->{
+            content.add(CustomFood.Polenta);
+        });
+
+        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "broth"),CustomFood.Broth);
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(content->{
+            content.add(CustomFood.Broth);
+        });
+
+        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "chocolate_milk_bottle"),CustomFood.ChocolateMilkBottle);
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(content->{
+            content.add(CustomFood.ChocolateMilkBottle);
         });
 
 

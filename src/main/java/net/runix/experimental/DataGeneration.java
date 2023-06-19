@@ -15,6 +15,7 @@ import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
 import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
+import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
@@ -22,7 +23,6 @@ import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import net.runix.items.CustomCrops;
 import net.runix.items.CustomFood;
-
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,6 +32,8 @@ import java.util.function.Consumer;
 import static net.runix.experimental.DataGeneration.MyTagGenerator.*;
 
 public class DataGeneration implements DataGeneratorEntrypoint {
+
+
     @Override
     public void onInitializeDataGenerator(FabricDataGenerator fabricDataGenerator) {
         FabricDataGenerator.Pack pack = fabricDataGenerator.createPack();
@@ -55,11 +57,18 @@ public class DataGeneration implements DataGeneratorEntrypoint {
                     .add(CustomCrops.TomatoItem)
                     .add(CustomCrops.CabbageItem);
 
-
+            getOrCreateTagBuilder(SANDWICH_MEAT)
+                    .add(Items.COOKED_PORKCHOP)
+                    .add(Items.COOKED_BEEF)
+                    .add(Items.COOKED_CHICKEN)
+                    .add(Items.COOKED_COD)
+                    .add(Items.COOKED_SALMON)
+                    .add(Items.COOKED_RABBIT)
+                    .add(Items.COOKED_MUTTON);
 
         }
         public static final TagKey<Item> SANDWICH_INGREDIENTS = TagKey.of(RegistryKeys.ITEM,new Identifier("haydaylite:sandwich_ingredients"));
-
+        public static final TagKey<Item> SANDWICH_MEAT = TagKey.of(RegistryKeys.ITEM, new Identifier("haydaylite:sandwich_meat"));
     }
 
 
@@ -68,9 +77,23 @@ public class DataGeneration implements DataGeneratorEntrypoint {
             super(generator);
         }
 
+        //generates a recipe using
+        private void GenerateShapeLessRecipe(ArrayList<ItemForGenerator> Ingredients,RecipeCategory category,Item result, Consumer<RecipeJsonProvider> exporter){
+
+            ShapelessRecipeJsonBuilder Recipe = ShapelessRecipeJsonBuilder.create(category,result);
+            for(ItemForGenerator Ingredient: Ingredients){
+                for(short counter = 1;counter <=Ingredient.count;counter++)
+                    Recipe = Recipe.input(Ingredient.item);
+                Recipe = Recipe.criterion(FabricRecipeProvider.hasItem(Ingredient.item),
+                        FabricRecipeProvider.conditionsFromItem(Ingredient.item));
+            }
+            Recipe.offerTo(exporter, new Identifier(FabricRecipeProvider.getRecipeName(result)));
+        }
+
         @Override
         public void generate(Consumer<RecipeJsonProvider> exporter) {
-            ShapelessRecipeJsonBuilder RecipeMixedSalad = ShapelessRecipeJsonBuilder.create(RecipeCategory.FOOD,CustomFood.MixedSalad);
+
+
             ArrayList<ItemForGenerator> IngredientsMixedSalad = new ArrayList<>(Arrays.asList(
                     new ItemForGenerator(CustomCrops.TomatoItem,2),
                     new ItemForGenerator(CustomCrops.BroccoliItem),
@@ -79,21 +102,40 @@ public class DataGeneration implements DataGeneratorEntrypoint {
                     new ItemForGenerator(Items.BOWL)
             ));
 
-            for(ItemForGenerator Ingredient : IngredientsMixedSalad){
-                for(short counter = 1;counter <=Ingredient.count;counter++) RecipeMixedSalad = RecipeMixedSalad.input(Ingredient.item);
-                    RecipeMixedSalad = RecipeMixedSalad.criterion(FabricRecipeProvider.hasItem(Ingredient.item),
-                            FabricRecipeProvider.conditionsFromItem(Ingredient.item));
-            }
-            RecipeMixedSalad.offerTo(exporter,new Identifier(FabricRecipeProvider.getRecipeName(CustomFood.MixedSalad)));
+            GenerateShapeLessRecipe(IngredientsMixedSalad,RecipeCategory.FOOD,CustomFood.MixedSalad,exporter);
+
+            ArrayList<ItemForGenerator> IngredientsPolenta = new ArrayList<>(Arrays.asList(
+                    new ItemForGenerator(CustomCrops.CornItem, 3),
+                    new ItemForGenerator(Items.WATER_BUCKET)
+
+            ));
+
+            GenerateShapeLessRecipe(IngredientsPolenta,RecipeCategory.FOOD,CustomFood.Polenta,exporter);
 
 
+            ArrayList<ItemForGenerator> IngredientsBroth = new ArrayList<>(Arrays.asList(
+                    new ItemForGenerator(CustomFood.TomatoSauce),
+                    new ItemForGenerator(Items.CARROT,2),
+                    new ItemForGenerator(Items.POTATO,2),
+                    new ItemForGenerator(Items.BONE,2)
+            ));
+
+            GenerateShapeLessRecipe(IngredientsBroth,RecipeCategory.FOOD,CustomFood.Broth,exporter);
+
+            ArrayList<ItemForGenerator> IngredientsChocolateMilkBottle = new ArrayList<>(Arrays.asList(
+                    new ItemForGenerator(Items.COCOA_BEANS, 2),
+                    new ItemForGenerator(Items.MILK_BUCKET),
+                    new ItemForGenerator(Items.SUGAR)
+            ));
+
+            GenerateShapeLessRecipe(IngredientsChocolateMilkBottle,RecipeCategory.FOOD,CustomFood.ChocolateMilkBottle,exporter);
 
             ShapedRecipeJsonBuilder.create(RecipeCategory.FOOD,CustomFood.Sandwich)
                     .pattern(" B ")
                     .pattern("CMC")
                     .pattern(" B ")
                     .input('B', Items.BREAD)
-                    .input('M', Items.COOKED_PORKCHOP)
+                    .input('M', SANDWICH_MEAT)
                     .input('C', SANDWICH_INGREDIENTS)
                     .criterion(FabricRecipeProvider.hasItem(Items.BREAD),
                             FabricRecipeProvider.conditionsFromItem(Items.BREAD))
@@ -103,6 +145,7 @@ public class DataGeneration implements DataGeneratorEntrypoint {
                             FabricRecipeProvider.conditionsFromItem(CustomCrops.CabbageItem))
                     .criterion(FabricRecipeProvider.hasItem(CustomCrops.TomatoItem),
                             FabricRecipeProvider.conditionsFromItem(CustomCrops.TomatoItem))
+
                     .offerTo(exporter, new Identifier(FabricRecipeProvider.getRecipeName(CustomFood.Sandwich)));
 
             ShapedRecipeJsonBuilder.create(RecipeCategory.FOOD,CustomFood.TomatoSauce)
@@ -133,6 +176,9 @@ public class DataGeneration implements DataGeneratorEntrypoint {
             translationBuilder.add(CustomCrops.CornItem,"Crop");
             translationBuilder.add(CustomFood.Sandwich, "Sandwich");
             translationBuilder.add(CustomFood.TomatoSauce,"Tomato sauce");
+            translationBuilder.add(CustomFood.Polenta, "Polenta");
+            translationBuilder.add(CustomFood.Broth, "Broth");
+            translationBuilder.add(CustomFood.ChocolateMilkBottle, "Chocolate Milk Bottle");
 
         }
     }
@@ -150,8 +196,13 @@ public class DataGeneration implements DataGeneratorEntrypoint {
         public void generateItemModels(ItemModelGenerator itemModelGenerator){
             itemModelGenerator.register(CustomFood.Sandwich, Models.GENERATED);
             itemModelGenerator.register(CustomFood.TomatoSauce,Models.GENERATED);
+            itemModelGenerator.register(CustomFood.Polenta, Models.GENERATED);
+            itemModelGenerator.register(CustomFood.Broth,Models.GENERATED);
+            itemModelGenerator.register(CustomFood.ChocolateMilkBottle,Models.GENERATED);
          }
     }
+
+
 
 }
 

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "minecraft:bowl"
+    },
+    "T": {
+      "item": "haydaylite:tomato"
+    }
+  },
+  "pattern": [
+    "TTT",
+    "TTT",
+    " B "
+  ],
+  "result": {
+    "item": "haydaylite:tomato_sauce"
+  },
+  "show_notification": true
+}

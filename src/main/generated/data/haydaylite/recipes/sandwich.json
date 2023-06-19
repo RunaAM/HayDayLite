@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "minecraft:bread"
+    },
+    "C": {
+      "tag": "haydaylite:sandwich_ingredients"
+    },
+    "M": {
+      "tag": "haydaylite:sandwich_meat"
+    }
+  },
+  "pattern": [
+    " B ",
+    "CMC",
+    " B "
+  ],
+  "result": {
+    "item": "haydaylite:sandwich"
+  },
+  "show_notification": true
+}
